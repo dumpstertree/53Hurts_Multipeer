@@ -7,20 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		151359EB1E2EF0F700C62ED9 /* DataUnpacker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151359EA1E2EF0F700C62ED9 /* DataUnpacker.swift */; };
+		153B9F061E2998280040FD3F /* PlayerPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153B9F051E2998280040FD3F /* PlayerPacket.swift */; };
 		15A4D9AC1E1C88390027A5F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A4D9AB1E1C88390027A5F6 /* AppDelegate.swift */; };
-		15A4D9AE1E1C88390027A5F6 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 15A4D9AD1E1C88390027A5F6 /* GameScene.sks */; };
 		15A4D9B01E1C88390027A5F6 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 15A4D9AF1E1C88390027A5F6 /* Actions.sks */; };
 		15A4D9B21E1C88390027A5F6 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A4D9B11E1C88390027A5F6 /* GameScene.swift */; };
 		15A4D9B41E1C88390027A5F6 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A4D9B31E1C88390027A5F6 /* GameViewController.swift */; };
 		15A4D9B71E1C88390027A5F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15A4D9B51E1C88390027A5F6 /* Main.storyboard */; };
 		15A4D9B91E1C88390027A5F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15A4D9B81E1C88390027A5F6 /* Assets.xcassets */; };
 		15A4D9BC1E1C88390027A5F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15A4D9BA1E1C88390027A5F6 /* LaunchScreen.storyboard */; };
+		15A4D9C41E1C88B00027A5F6 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 15A4D9C31E1C88B00027A5F6 /* GameScene.sks */; };
+		15A4D9C61E1C8AA60027A5F6 /* MultipeerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A4D9C51E1C8AA60027A5F6 /* MultipeerController.swift */; };
+		15C2A18F1E22FDAB0096BFB1 /* MultipeerSKSpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C2A18E1E22FDAB0096BFB1 /* MultipeerSKSpriteNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		15A4D9A81E1C88390027A5F6 /* 53 Hurts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "53 Hurts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		151359EA1E2EF0F700C62ED9 /* DataUnpacker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataUnpacker.swift; sourceTree = "<group>"; };
+		153B9F051E2998280040FD3F /* PlayerPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPacket.swift; sourceTree = "<group>"; };
+		15A4D9A81E1C88390027A5F6 /* FiftyThreeHurts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FiftyThreeHurts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15A4D9AB1E1C88390027A5F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		15A4D9AD1E1C88390027A5F6 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		15A4D9AF1E1C88390027A5F6 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		15A4D9B11E1C88390027A5F6 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		15A4D9B31E1C88390027A5F6 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -28,6 +33,9 @@
 		15A4D9B81E1C88390027A5F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		15A4D9BB1E1C88390027A5F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		15A4D9BD1E1C88390027A5F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		15A4D9C31E1C88B00027A5F6 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		15A4D9C51E1C8AA60027A5F6 /* MultipeerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerController.swift; sourceTree = "<group>"; };
+		15C2A18E1E22FDAB0096BFB1 /* MultipeerSKSpriteNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerSKSpriteNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +52,7 @@
 		15A4D99F1E1C88390027A5F6 = {
 			isa = PBXGroup;
 			children = (
-				15A4D9AA1E1C88390027A5F6 /* 53 Hurts */,
+				15A4D9AA1E1C88390027A5F6 /* FiftyThreeHurts */,
 				15A4D9A91E1C88390027A5F6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,33 +60,38 @@
 		15A4D9A91E1C88390027A5F6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				15A4D9A81E1C88390027A5F6 /* 53 Hurts.app */,
+				15A4D9A81E1C88390027A5F6 /* FiftyThreeHurts.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		15A4D9AA1E1C88390027A5F6 /* 53 Hurts */ = {
+		15A4D9AA1E1C88390027A5F6 /* FiftyThreeHurts */ = {
 			isa = PBXGroup;
 			children = (
 				15A4D9AB1E1C88390027A5F6 /* AppDelegate.swift */,
-				15A4D9AD1E1C88390027A5F6 /* GameScene.sks */,
 				15A4D9AF1E1C88390027A5F6 /* Actions.sks */,
+				15A4D9C31E1C88B00027A5F6 /* GameScene.sks */,
 				15A4D9B11E1C88390027A5F6 /* GameScene.swift */,
-				15A4D9B31E1C88390027A5F6 /* GameViewController.swift */,
 				15A4D9B51E1C88390027A5F6 /* Main.storyboard */,
 				15A4D9B81E1C88390027A5F6 /* Assets.xcassets */,
 				15A4D9BA1E1C88390027A5F6 /* LaunchScreen.storyboard */,
 				15A4D9BD1E1C88390027A5F6 /* Info.plist */,
+				15A4D9B31E1C88390027A5F6 /* GameViewController.swift */,
+				15A4D9C51E1C8AA60027A5F6 /* MultipeerController.swift */,
+				15C2A18E1E22FDAB0096BFB1 /* MultipeerSKSpriteNode.swift */,
+				153B9F051E2998280040FD3F /* PlayerPacket.swift */,
+				151359EA1E2EF0F700C62ED9 /* DataUnpacker.swift */,
 			);
+			name = FiftyThreeHurts;
 			path = "53 Hurts";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		15A4D9A71E1C88390027A5F6 /* 53 Hurts */ = {
+		15A4D9A71E1C88390027A5F6 /* FiftyThreeHurts */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 15A4D9C01E1C88390027A5F6 /* Build configuration list for PBXNativeTarget "53 Hurts" */;
+			buildConfigurationList = 15A4D9C01E1C88390027A5F6 /* Build configuration list for PBXNativeTarget "FiftyThreeHurts" */;
 			buildPhases = (
 				15A4D9A41E1C88390027A5F6 /* Sources */,
 				15A4D9A51E1C88390027A5F6 /* Frameworks */,
@@ -88,9 +101,9 @@
 			);
 			dependencies = (
 			);
-			name = "53 Hurts";
+			name = FiftyThreeHurts;
 			productName = "53 Hurts";
-			productReference = 15A4D9A81E1C88390027A5F6 /* 53 Hurts.app */;
+			productReference = 15A4D9A81E1C88390027A5F6 /* FiftyThreeHurts.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -105,7 +118,7 @@
 				TargetAttributes = {
 					15A4D9A71E1C88390027A5F6 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 78C48PW3C4;
+						DevelopmentTeam = 3U25H7RMGQ;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -123,7 +136,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				15A4D9A71E1C88390027A5F6 /* 53 Hurts */,
+				15A4D9A71E1C88390027A5F6 /* FiftyThreeHurts */,
 			);
 		};
 /* End PBXProject section */
@@ -134,9 +147,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				15A4D9B71E1C88390027A5F6 /* Main.storyboard in Resources */,
-				15A4D9AE1E1C88390027A5F6 /* GameScene.sks in Resources */,
 				15A4D9B91E1C88390027A5F6 /* Assets.xcassets in Resources */,
 				15A4D9BC1E1C88390027A5F6 /* LaunchScreen.storyboard in Resources */,
+				15A4D9C41E1C88B00027A5F6 /* GameScene.sks in Resources */,
 				15A4D9B01E1C88390027A5F6 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -149,8 +162,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				15A4D9B21E1C88390027A5F6 /* GameScene.swift in Sources */,
+				151359EB1E2EF0F700C62ED9 /* DataUnpacker.swift in Sources */,
 				15A4D9B41E1C88390027A5F6 /* GameViewController.swift in Sources */,
+				153B9F061E2998280040FD3F /* PlayerPacket.swift in Sources */,
 				15A4D9AC1E1C88390027A5F6 /* AppDelegate.swift in Sources */,
+				15A4D9C61E1C8AA60027A5F6 /* MultipeerController.swift in Sources */,
+				15C2A18F1E22FDAB0096BFB1 /* MultipeerSKSpriteNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,10 +290,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 78C48PW3C4;
+				DEVELOPMENT_TEAM = 3U25H7RMGQ;
 				INFOPLIST_FILE = "53 Hurts/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.dumpstertree.-3-Hurts";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dumpstertree.FiftyThreeHurts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -286,10 +303,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 78C48PW3C4;
+				DEVELOPMENT_TEAM = 3U25H7RMGQ;
 				INFOPLIST_FILE = "53 Hurts/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.dumpstertree.-3-Hurts";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dumpstertree.FiftyThreeHurts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -307,13 +324,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		15A4D9C01E1C88390027A5F6 /* Build configuration list for PBXNativeTarget "53 Hurts" */ = {
+		15A4D9C01E1C88390027A5F6 /* Build configuration list for PBXNativeTarget "FiftyThreeHurts" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				15A4D9C11E1C88390027A5F6 /* Debug */,
 				15A4D9C21E1C88390027A5F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
