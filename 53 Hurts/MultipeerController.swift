@@ -67,7 +67,6 @@ class MultipeerController: NSObject {
             print("could not convert")
         }
     }
-    
 }
 
 extension MultipeerController: MCNearbyServiceAdvertiserDelegate {
@@ -83,17 +82,26 @@ extension MultipeerController: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error){
     }
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?){
+        addPeer(peerID: peerID)
+    }
+    func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID){
+        removePeer( peerID: peerID );
+    }
+    
+    private func addPeer( peerID: MCPeerID ){
+        
         if !nearbyPeers.contains(peerID){
             nearbyPeers.append(peerID)
         }
         delegate.peerFound( nearbyPeers: nearbyPeers )
-    }
-    func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID){
         
+        serviceBrowser.invitePeer(peerID, to: session, withContext: nil, timeout: 3)
+    }
+    private func removePeer( peerID: MCPeerID ){
         var index = -1
-        for peer in nearbyPeers{
+        for _ in nearbyPeers{
             index += 1
-            if peer == nearbyPeers[index]{
+            if peerID == nearbyPeers[index]{
                 break
             }
         }
@@ -117,21 +125,11 @@ extension MultipeerController : MCSessionDelegate {
             break
         case MCSessionState.connected:
             print("connected")
-            
-            pushData(data:  PlayerPacket( id: UIDevice.current.name ) )
             break
         }
     }
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID){
-        
-        if let transformPacket = NSKeyedUnarchiver.unarchiveObject(with: data) as? TransformPacket {
-            print (transformPacket.x)
-            return
-        }
-        
-        if let playerPacket = NSKeyedUnarchiver.unarchiveObject(with: data) as? PlayerPacket {
-            return
-        }
+        DataUnpacker.unpackPacket(data: data)
     }
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
     }

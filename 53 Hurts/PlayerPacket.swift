@@ -11,29 +11,20 @@ import Foundation
 class PlayerPacket: NSObject, NSCoding {
     
     let id: String
+    let skin: NSInteger
     
-    let r: Float
-    let g: Float
-    let b: Float
-    
-    init( id: String, r: Float, g: Float, b:Float ){
+    init( id: String, skin: NSInteger ){
         self.id = id
-        self.r = r
-        self.g = g
-        self.b = b
+        self.skin = skin
     }
     
     required init(coder decoder: NSCoder) {
         self.id = decoder.decodeObject(forKey: "id") as? String ?? ""
-        self.r = r
-        self.g = g
-        self.b = b
+        self.skin = decoder.decodeObject(forKey: "skin") as? NSInteger ?? -1
     }
     
     func encode(with coder: NSCoder) {
         coder.encode( id, forKey: "id" )
-        self.r = r
-        self.g = g
-        self.b = b
+         coder.encode( skin, forKey: "skin" )
     }
 }

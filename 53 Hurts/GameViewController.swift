@@ -63,6 +63,14 @@ class GameViewController: UIViewController {
     @IBAction func connectButtonClicked(_ sender: Any) {
         multipeerController.createSession()
     }
+    @IBAction func leftButtonClicked(_ sender: Any) {
+    }
+    @IBAction func upButtonClicked(_ sender: Any) {
+    }
+    @IBAction func rightButtonClicked(_ sender: Any) {
+    }
+    @IBAction func downButtonClicked(_ sender: Any) {
+    }
     
 }
 
