@@ -9,8 +9,9 @@
 /* Begin PBXBuildFile section */
 		151359EB1E2EF0F700C62ED9 /* DataUnpacker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151359EA1E2EF0F700C62ED9 /* DataUnpacker.swift */; };
 		153B9F061E2998280040FD3F /* PlayerPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153B9F051E2998280040FD3F /* PlayerPacket.swift */; };
+		154284971E3E9EBD006C06D6 /* AckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154284961E3E9EBD006C06D6 /* AckPacket.swift */; };
+		154284991E3EB23A006C06D6 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154284981E3EB23A006C06D6 /* Packet.swift */; };
 		1590CA411E30311D00D3C8B9 /* DataPacker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1590CA401E30311D00D3C8B9 /* DataPacker.swift */; };
-		15A228671E3465B600EB5EB5 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A228661E3465B600EB5EB5 /* Player.swift */; };
 		15A4D9AC1E1C88390027A5F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A4D9AB1E1C88390027A5F6 /* AppDelegate.swift */; };
 		15A4D9B01E1C88390027A5F6 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 15A4D9AF1E1C88390027A5F6 /* Actions.sks */; };
 		15A4D9B21E1C88390027A5F6 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A4D9B11E1C88390027A5F6 /* GameScene.swift */; };
@@ -28,8 +29,9 @@
 /* Begin PBXFileReference section */
 		151359EA1E2EF0F700C62ED9 /* DataUnpacker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataUnpacker.swift; sourceTree = "<group>"; };
 		153B9F051E2998280040FD3F /* PlayerPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPacket.swift; sourceTree = "<group>"; };
+		154284961E3E9EBD006C06D6 /* AckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AckPacket.swift; sourceTree = "<group>"; };
+		154284981E3EB23A006C06D6 /* Packet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
 		1590CA401E30311D00D3C8B9 /* DataPacker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPacker.swift; sourceTree = "<group>"; };
-		15A228661E3465B600EB5EB5 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		15A4D9A81E1C88390027A5F6 /* FiftyThreeHurts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FiftyThreeHurts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15A4D9AB1E1C88390027A5F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15A4D9AF1E1C88390027A5F6 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -57,9 +59,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		154284931E3E9E46006C06D6 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				15A4D9B31E1C88390027A5F6 /* GameViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		154284941E3E9E50006C06D6 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				15A4D9B11E1C88390027A5F6 /* GameScene.swift */,
+				15A4D9C31E1C88B00027A5F6 /* GameScene.sks */,
+			);
+			name = Scene;
+			sourceTree = "<group>";
+		};
+		154284951E3E9E71006C06D6 /* Multipeer */ = {
+			isa = PBXGroup;
+			children = (
+				1590CA421E3031AD00D3C8B9 /* DataPackets */,
+				15A4D9C51E1C8AA60027A5F6 /* MultipeerController.swift */,
+				15BE7A271E36C23E00F46692 /* PacketArchiver.swift */,
+				15C2A18E1E22FDAB0096BFB1 /* MultipeerSKSpriteNode.swift */,
+			);
+			name = Multipeer;
+			sourceTree = "<group>";
+		};
 		1590CA421E3031AD00D3C8B9 /* DataPackets */ = {
 			isa = PBXGroup;
 			children = (
+				154284981E3EB23A006C06D6 /* Packet.swift */,
+				154284961E3E9EBD006C06D6 /* AckPacket.swift */,
 				151359EA1E2EF0F700C62ED9 /* DataUnpacker.swift */,
 				1590CA401E30311D00D3C8B9 /* DataPacker.swift */,
 			);
@@ -89,16 +121,11 @@
 		1590CA451E3031CF00D3C8B9 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				15A4D9C31E1C88B00027A5F6 /* GameScene.sks */,
-				15A4D9B11E1C88390027A5F6 /* GameScene.swift */,
-				15C2A18E1E22FDAB0096BFB1 /* MultipeerSKSpriteNode.swift */,
+				154284951E3E9E71006C06D6 /* Multipeer */,
+				154284941E3E9E50006C06D6 /* Scene */,
+				154284931E3E9E46006C06D6 /* ViewControllers */,
 				15BE7A291E36DA7300F46692 /* FrameCounter.swift */,
 				15A4D9AB1E1C88390027A5F6 /* AppDelegate.swift */,
-				15A4D9B31E1C88390027A5F6 /* GameViewController.swift */,
-				15A228661E3465B600EB5EB5 /* Player.swift */,
-				15A4D9C51E1C8AA60027A5F6 /* MultipeerController.swift */,
-				15BE7A271E36C23E00F46692 /* PacketArchiver.swift */,
-				1590CA421E3031AD00D3C8B9 /* DataPackets */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -208,12 +235,13 @@
 				15A4D9B21E1C88390027A5F6 /* GameScene.swift in Sources */,
 				15BE7A281E36C23E00F46692 /* PacketArchiver.swift in Sources */,
 				151359EB1E2EF0F700C62ED9 /* DataUnpacker.swift in Sources */,
+				154284991E3EB23A006C06D6 /* Packet.swift in Sources */,
 				15A4D9B41E1C88390027A5F6 /* GameViewController.swift in Sources */,
 				1590CA411E30311D00D3C8B9 /* DataPacker.swift in Sources */,
+				154284971E3E9EBD006C06D6 /* AckPacket.swift in Sources */,
 				153B9F061E2998280040FD3F /* PlayerPacket.swift in Sources */,
 				15A4D9AC1E1C88390027A5F6 /* AppDelegate.swift in Sources */,
 				15A4D9C61E1C8AA60027A5F6 /* MultipeerController.swift in Sources */,
-				15A228671E3465B600EB5EB5 /* Player.swift in Sources */,
 				15C2A18F1E22FDAB0096BFB1 /* MultipeerSKSpriteNode.swift in Sources */,
 				15BE7A2A1E36DA7300F46692 /* FrameCounter.swift in Sources */,
 			);

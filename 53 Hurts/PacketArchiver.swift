@@ -10,86 +10,67 @@ import Foundation
 
 class PacketArchiver{
     
+    // Properties
     static public var CurrentPacket : TransformPacket? {
         get {
             
-            if _transformPacketsFrames.count-1 < _frameDelay{
+            if _transformPackets.count < _maxFrameHistory{
                 return nil
             }
-            let frame = _transformPacketsFrames[ _frameDelay ]
-            return  _transformPackets[ frame ]
-        }
-    }
-    static public var NextPacket : TransformPacket? {
-        get {
-            
-            if _transformPacketsFrames.count-1 < _frameDelay+1{
+            guard let packet = _transformPackets[ FrameCounter.Frame - _maxFrameHistory ] else {
+               
+                let x = FrameCounter.Frame - _maxFrameHistory
+                let y = FrameCounter.Frame
+                //let key = _transformPackets.keys.sorted()
+                
+                print("No Packet: \(x) / \(y)")
                 return nil
             }
             
-            let frame = _transformPacketsFrames[ _frameDelay+1 ]
-            return _transformPackets[ frame ]
+            return  packet
         }
     }
     
-    static private var _transformPacketsFrames: [Int] = []
+    // Instance Variables
+    static private var _newTransformPackets: [TransformPacket] = []
+    static private var _ackedTransformPackets: [AckPacket] = []
     static private var _transformPackets: [Int: TransformPacket] = [:]
-    
-    static private let _maxFrameHistory = 10
-    static private let _timeBetweenFrames = 0.0333
-    static private let _frameDelay = 5
+    static private let _maxFrameHistory = 60
     
     // Public
-    static public func addTransformPacket( transformPacket: TransformPacket ){
-       
-        let frame = transformPacket.frame as Int
+    static public func insertNewTransformpackets( transformPacket: TransformPacket ){
+        _newTransformPackets.append(transformPacket)
+    }
+    static public func ackTransformPacket( ackPacket: AckPacket ){
+        _ackedTransformPackets.append(ackPacket)
+    }
+    static public func refresh(){
         
-        // Remove Old Packets
-        while _transformPacketsFrames.count > _maxFrameHistory {
-            _transformPackets.removeValue(forKey: _transformPacketsFrames.first!)
-            _transformPacketsFrames.removeFirst()
-        }
-        
-        // Add New Packet
-        if _transformPacketsFrames.count > 0 {
-            if frame > _transformPacketsFrames.first!{
-                _transformPacketsFrames.append(frame)
-                _transformPackets[frame] = transformPacket
+        // Iterate through all new packets
+        for packet in _newTransformPackets{
+            
+            let frame = packet.frame as Int
+            let smallestFrame = FrameCounter.Frame - _maxFrameHistory
+            
+            // If too old dont store
+            if frame < smallestFrame{
+                print("Packet too old, thrown out; FRAME : \(packet.frame)) ")
+                return
             }
+            
+            // Add Packet
+            _transformPackets[frame] = packet
         }
-        else{
-            _transformPacketsFrames.append(frame)
-            _transformPackets[frame] = transformPacket
-        }
-
         
-        // Sort
-        _transformPacketsFrames.sort()
-    }
-    static public func getTransformPackets() -> TransformInterpolaterPacket{
-        let packet = TransformInterpolaterPacket()
-        return packet
-    }
-}
-
-public struct TransformInterpolaterPacket{
-    
-    let currentPacket: TransformPacket?
-    let targetPacket: TransformPacket?
-    let frameDistance: Int
-    
-    init() {
+        // Clear new packets
+        _newTransformPackets = []
         
-        currentPacket = PacketArchiver.CurrentPacket
-        targetPacket  = PacketArchiver.NextPacket
-        
-        if let cur = currentPacket,  let tar = targetPacket {
-            let curFrame = cur.frame as Int
-            let tarFrame = tar.frame as Int
-            frameDistance = abs( curFrame - tarFrame )
-        }
-        else{
-            frameDistance = -1
+        // Remove Old Keys
+        let smallestFrame = FrameCounter.Frame - _maxFrameHistory
+        let keys = _transformPackets.keys.sorted().filter { $0 < smallestFrame }
+        for key in keys{
+            _transformPackets.removeValue(forKey: key)
         }
     }
 }
+

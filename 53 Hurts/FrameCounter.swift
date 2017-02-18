@@ -11,14 +11,20 @@ import SpriteKit
 
 class FrameCounter{
     
+    // Properties
     static public var Frame : Int {
         get {
             return _frame
         }
     }
-    static var _frame: Int = -1
+    
+    // Instance Variables
+    static private var _frame: Int = -1
     
     static public func increment() {
         _frame = _frame+1
+    }
+    static public func set( frame: Int ){
+        _frame = frame
     }
 }

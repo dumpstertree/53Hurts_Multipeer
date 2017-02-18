@@ -12,7 +12,6 @@ import MultipeerConnectivity
 class MultipeerController: NSObject {
     
     var nearbyPeers : [MCPeerID] = []
-    
     var delegate: MultipeerControllerDelegate!
     
     let serviceType = "FiftyThreeHurts"
@@ -26,6 +25,12 @@ class MultipeerController: NSObject {
         return session
     }()
     
+    var packetsWaitingForAck : [ String : TransformPacket] = [:]
+    var packetResendTime = 10
+    
+    var incomingPackets: [Packet] = []
+    var outgoingPackets: [Packet] = []
+    
     override init(){
         serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: nil, serviceType: serviceType)
         serviceBrowser    = MCNearbyServiceBrowser(peer: myPeerId, serviceType: serviceType)
@@ -34,6 +39,7 @@ class MultipeerController: NSObject {
         
         serviceAdvertiser.delegate = self
         serviceBrowser.delegate    = self
+        DataUnpacker.delegates.append(self)
     }
     
     public func advertise( enabled: Bool){
@@ -58,17 +64,50 @@ class MultipeerController: NSObject {
             serviceBrowser.invitePeer(peer, to: session, withContext: nil, timeout: 3)
         }
     }
-    public func pushData( data: Any ){
-        let convertedData = NSKeyedArchiver.archivedData(withRootObject: data)
+    public func pushData( data: Packet ){
+        
+        // If not connected; ABORT
+        if session.connectedPeers.count == 0{
+            return
+        }
+        
         do {
+            // Try to send Data
+            let convertedData = NSKeyedArchiver.archivedData(withRootObject: data)
             try session.send( convertedData, toPeers: session.connectedPeers, with: MCSessionSendDataMode.reliable)
+           
+            // If not already in list; add it
+            if let p = data as? TransformPacket{
+                if packetsWaitingForAck[p.uuid] == nil {
+                    packetsWaitingForAck[p.uuid] = p
+                }
+            }
         }
         catch{
             print("could not convert")
         }
     }
+    public func resendPackets(){
+        
+        for packet in packetsWaitingForAck{
+            let packetFrame = packet.value.frame as Int
+            if ( (FrameCounter.Frame-packetFrame) % packetResendTime) == 0 {
+                pushData(data: packet.value)
+                print("RESENT : \(packet.value.frame)")
+            }
+        }
+    }
+
+    public func push(){
+    
+    }
+    
+    public func pull(){
+        
+    }
 }
 
+// Advertiser Delegate
 extension MultipeerController: MCNearbyServiceAdvertiserDelegate {
    
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: Error) {
@@ -77,6 +116,8 @@ extension MultipeerController: MCNearbyServiceAdvertiserDelegate {
         invitationHandler(true, self.session)
     }
 }
+
+// Browser Delegate
 extension MultipeerController: MCNearbyServiceBrowserDelegate {
     
     func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error){
@@ -112,6 +153,8 @@ extension MultipeerController: MCNearbyServiceBrowserDelegate {
         delegate.peerFound( nearbyPeers: nearbyPeers )
     }
 }
+
+// Session Delegate
 extension MultipeerController : MCSessionDelegate {
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
@@ -139,6 +182,18 @@ extension MultipeerController : MCSessionDelegate {
     }
 }
 
+// Data Unpacket Delegate
+extension MultipeerController : DataUnpackerDelegate {
+    
+    func unpackedAckPacket(ackPacket: AckPacket) {
+        //incomingPackets.append(ackPacket)
+        packetsWaitingForAck.removeValue(forKey: ackPacket.uuid )
+    }
+    func unpackedTransformPacket(transformPacket: TransformPacket) {
+        pushData(data: AckPacket(uuid: transformPacket.uuid ))
+    }
+}
+
 // Session States
 extension MCSessionState {
     
@@ -151,8 +206,12 @@ extension MCSessionState {
     }
 }
 
+
 protocol MultipeerControllerDelegate {
     func peerFound( nearbyPeers: [MCPeerID] )
     func peerLost(  nearbyPeers: [MCPeerID] )
     func recieveData()
 }
+
+
+

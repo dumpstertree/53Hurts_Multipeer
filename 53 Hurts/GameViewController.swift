@@ -23,7 +23,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // Setup UITable
-        nearbyUsersTableView.delegate = self
+        nearbyUsersTableView.delegate   = self
         nearbyUsersTableView.dataSource = self
         
         // Setup MultipeerController
@@ -36,11 +36,11 @@ class GameViewController: UIViewController {
             let scene = GameScene(size: CGSize(width:750, height: 1334))
             scene.scaleMode = .aspectFill
             scene.multipeerController = multipeerController
+            
             view.presentScene(scene)
             view.ignoresSiblingOrder = true
-            
-            view.showsFPS = true
-            view.showsNodeCount = true
+            view.showsFPS            = true
+            view.showsNodeCount      = true
         }
     }
     
