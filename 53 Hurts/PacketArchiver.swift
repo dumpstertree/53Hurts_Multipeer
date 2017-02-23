@@ -11,7 +11,7 @@ import Foundation
 class PacketArchiver{
     
     // Properties
-    static public var CurrentPacket : TransformPacket? {
+    static public var CurrentPacket : TransformPacket2? {
         get {
             
             if _transformPackets.count < _maxFrameHistory{
@@ -21,52 +21,45 @@ class PacketArchiver{
                
                 let x = FrameCounter.Frame - _maxFrameHistory
                 let y = FrameCounter.Frame
-                //let key = _transformPackets.keys.sorted()
-                
                 print("No Packet: \(x) / \(y)")
                 return nil
             }
             
-            return  packet
+            return packet
         }
     }
     
     // Instance Variables
-    static private var _newTransformPackets: [TransformPacket] = []
-    static private var _ackedTransformPackets: [AckPacket] = []
-    static private var _transformPackets: [Int: TransformPacket] = [:]
+    static private var _newTransformPackets: [TransformPacket2] = []
+    static private var _transformPackets: [Int: TransformPacket2] = [:]
     static private let _maxFrameHistory = 60
     
     // Public
-    static public func insertNewTransformpackets( transformPacket: TransformPacket ){
+    static public func insertNewTransformpackets( transformPacket: TransformPacket2 ){
         _newTransformPackets.append(transformPacket)
     }
-    static public func ackTransformPacket( ackPacket: AckPacket ){
-        _ackedTransformPackets.append(ackPacket)
-    }
-    static public func refresh(){
+    static public func update(){
+        
+        let smallestFrame = FrameCounter.Frame - _maxFrameHistory
         
         // Iterate through all new packets
         for packet in _newTransformPackets{
             
+            // If too old throw out
             let frame = packet.frame as Int
-            let smallestFrame = FrameCounter.Frame - _maxFrameHistory
-            
-            // If too old dont store
             if frame < smallestFrame{
                 print("Packet too old, thrown out; FRAME : \(packet.frame)) ")
-                return
+                continue
             }
-            
+
             // Add Packet
             _transformPackets[frame] = packet
         }
         
         // Clear new packets
-        _newTransformPackets = []
+        _newTransformPackets.removeAll()
         
-        // Remove Old Keys
-        let smallestFrame = FrameCounter.Frame - _maxFrameHistory
+        // Remove old packets
         let keys = _transformPackets.keys.sorted().filter { $0 < smallestFrame }
         for key in keys{
             _transformPackets.removeValue(forKey: key)

@@ -25,11 +25,11 @@ class MultipeerController: NSObject {
         return session
     }()
     
-    var packetsWaitingForAck : [ String : TransformPacket] = [:]
+    var packetsWaitingForAck : [ String : TransformPacket2] = [:] // This needs to be a synchronized dictionary
     var packetResendTime = 10
     
-    var incomingPackets: [Packet] = []
-    var outgoingPackets: [Packet] = []
+    private var _incomingPackets = SynchronizedArray<Packet>()
+    private var _outgoingPackets = SynchronizedArray<Packet>()
     
     override init(){
         serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: nil, serviceType: serviceType)
@@ -64,46 +64,98 @@ class MultipeerController: NSObject {
             serviceBrowser.invitePeer(peer, to: session, withContext: nil, timeout: 3)
         }
     }
-    public func pushData( data: Packet ){
-        
-        // If not connected; ABORT
+    public func addIncomingPacket( packet: Packet ){
+        _incomingPackets.append(newElement: packet)
+    }
+    public func addOutgoingPacket( packet: Packet ){
+        _outgoingPackets.append(newElement: packet)
+    }
+    public func update(){
+        push()
+        pull()
+    }
+    
+    private func push(){
+       
         if session.connectedPeers.count == 0{
             return
         }
         
-        do {
-            // Try to send Data
-            let convertedData = NSKeyedArchiver.archivedData(withRootObject: data)
-            try session.send( convertedData, toPeers: session.connectedPeers, with: MCSessionSendDataMode.reliable)
-           
-            // If not already in list; add it
-            if let p = data as? TransformPacket{
-                if packetsWaitingForAck[p.uuid] == nil {
-                    packetsWaitingForAck[p.uuid] = p
+        // Send New Packets
+        for i in 0..<_outgoingPackets.count() {
+            do {
+            
+                // Get packet instance
+                let packet = _outgoingPackets[i]
+                
+                // Ack Packets
+                if let _ = packet as? AckPacket{
+                    let cd = NSKeyedArchiver.archivedData(withRootObject: packet)
+                    try session.send( cd, toPeers: session.connectedPeers, with: MCSessionSendDataMode.reliable)
+                    continue;
+                }
+                
+                // Transform Packet
+                if let p = packet as? TransformPacket2{
+                    try session.send( p.Data!, toPeers: session.connectedPeers, with: MCSessionSendDataMode.reliable)
+                    continue;
+                }
+            }
+            catch{
+                print("COULD NOT CONVERT;")
+                continue
+            }
+        }
+        
+        // Clear
+        _outgoingPackets.removeAll()
+    
+        // Resend any packets still waiting for an ACK
+        for (uuid,packet) in packetsWaitingForAck{
+            let packetFrame = packet.frame as Int
+            
+            // Remove from ACK packets due to age
+            if  FrameCounter.Frame - packetFrame > 30{
+                packetsWaitingForAck.removeValue(forKey: uuid)
+                continue
+            }
+            
+            // Add to outgoing packets to send again next frame
+            if ((FrameCounter.Frame-packetFrame) % packetResendTime) == 0 {
+                _outgoingPackets.append( newElement: packet )
+                print("RESENT : \(packet.frame)")
+            }
+        }
+    }
+    private func pull(){
+        
+        // Recieve Packets
+        for i in 0..<_incomingPackets.count() {
+            do {
+                
+                // Get packet instance
+                let packet = _incomingPackets[i]
+                
+                // Ack Packets
+                if let p = packet as? AckPacket{
+                    if packetsWaitingForAck[p.uuid] != nil {
+                        packetsWaitingForAck.removeValue(forKey: p.uuid)
+                    }
+                }
+                
+                // add to archive
+                if let p = packet as? TransformPacket2{
+                    PacketArchiver.insertNewTransformpackets(transformPacket: p)
                 }
             }
         }
-        catch{
-            print("could not convert")
-        }
-    }
-    public func resendPackets(){
         
-        for packet in packetsWaitingForAck{
-            let packetFrame = packet.value.frame as Int
-            if ( (FrameCounter.Frame-packetFrame) % packetResendTime) == 0 {
-                pushData(data: packet.value)
-                print("RESENT : \(packet.value.frame)")
-            }
-        }
-    }
-
-    public func push(){
-    
-    }
-    
-    public func pull(){
         
+        // Clear
+        _incomingPackets.removeAll()
+        
+        // Update Packet Archiver
+        PacketArchiver.update()
     }
 }
 
@@ -149,8 +201,6 @@ extension MultipeerController: MCNearbyServiceBrowserDelegate {
         if index != -1{
             nearbyPeers.remove(at: index)
         }
-        
-        delegate.peerFound( nearbyPeers: nearbyPeers )
     }
 }
 
@@ -186,11 +236,10 @@ extension MultipeerController : MCSessionDelegate {
 extension MultipeerController : DataUnpackerDelegate {
     
     func unpackedAckPacket(ackPacket: AckPacket) {
-        //incomingPackets.append(ackPacket)
-        packetsWaitingForAck.removeValue(forKey: ackPacket.uuid )
+        addIncomingPacket(packet: ackPacket)
     }
-    func unpackedTransformPacket(transformPacket: TransformPacket) {
-        pushData(data: AckPacket(uuid: transformPacket.uuid ))
+    func unpackedTransformPacket(transformPacket: TransformPacket2) {
+         addIncomingPacket(packet: transformPacket)
     }
 }
 

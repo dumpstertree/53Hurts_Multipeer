@@ -11,6 +11,7 @@ import Foundation
 class AckPacket: NSObject, NSCoding, Packet{
     
     let uuid: String
+    let frame: Int = -1
     
     init( uuid: String ){
         self.uuid = uuid

@@ -43,12 +43,8 @@ class GameScene: SKScene {
         // User Connected Player
         connectedPlayer?.pullData()
         
-        // Cleanup old packets
-        PacketArchiver.refresh()
-        
-        // Resend Data
-        multipeerController.resendPackets()
-        
+        // Update Packets
+        multipeerController.update()
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         player?.position = touches.first!.location(in: self)

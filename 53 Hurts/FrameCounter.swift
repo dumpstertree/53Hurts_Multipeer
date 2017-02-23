@@ -19,7 +19,7 @@ class FrameCounter{
     }
     
     // Instance Variables
-    static private var _frame: Int = -1
+    static private var _frame: Int = 0
     
     static public func increment() {
         _frame = _frame+1

@@ -15,11 +15,20 @@ class DataUnpacker{
     
     public static func unpackPacket( data: Data ){
     
-        if let transformPacket = NSKeyedUnarchiver.unarchiveObject(with: data) as? TransformPacket {
-            checkFrame(packet: transformPacket)
+        if let d = TransformPacket2.decode(data: data) {
+            let transformPacket = TransformPacket2(data: d)
+            checkFrame(packet: transformPacket) // Eventually needs to be moved to all packets
             DataUnpacker.unpackTransformPacket( transformPacket: transformPacket )
             return
         }
+        
+        /*if let transformPacket = NSKeyedUnarchiver.unarchiveObject(with: data) as? TransformPacket {
+            
+            checkFrame(packet: transformPacket) // Eventually needs to be moved to all packets
+           
+            DataUnpacker.unpackTransformPacket( transformPacket: transformPacket )
+            return
+        }*/
         
         if let ackPacket = NSKeyedUnarchiver.unarchiveObject(with: data) as? AckPacket {
             DataUnpacker.unpackAckPacket( ackPacket: ackPacket )
@@ -35,16 +44,13 @@ class DataUnpacker{
     }
     
     // TRANSFORM PACKET
-    private static func unpackTransformPacket( transformPacket: TransformPacket ){
-        
-        PacketArchiver.insertNewTransformpackets(transformPacket: transformPacket)
-        
+    private static func unpackTransformPacket( transformPacket: TransformPacket2 ){
         for delegate in delegates{
             delegate.unpackedTransformPacket(transformPacket: transformPacket)
         }
     }
     
-    private static func checkFrame( packet: TransformPacket ){
+    private static func checkFrame( packet: Packet ){
         if packet.frame as Int > FrameCounter.Frame{
             FrameCounter.set(frame: packet.frame as Int)
         }
@@ -53,6 +59,6 @@ class DataUnpacker{
 
 
 protocol DataUnpackerDelegate {
-    func unpackedTransformPacket( transformPacket: TransformPacket )
+    func unpackedTransformPacket( transformPacket: TransformPacket2 )
     func unpackedAckPacket( ackPacket: AckPacket )
 }

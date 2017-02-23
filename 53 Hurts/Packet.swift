@@ -8,5 +8,6 @@
 
 import Foundation
 protocol Packet {
-    
+    var uuid: String{ get }
+    var frame: Int { get }
 }

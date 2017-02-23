@@ -11,6 +11,9 @@
 		153B9F061E2998280040FD3F /* PlayerPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153B9F051E2998280040FD3F /* PlayerPacket.swift */; };
 		154284971E3E9EBD006C06D6 /* AckPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154284961E3E9EBD006C06D6 /* AckPacket.swift */; };
 		154284991E3EB23A006C06D6 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154284981E3EB23A006C06D6 /* Packet.swift */; };
+		156816571E5E4EA7005771B5 /* TransformPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156816561E5E4EA7005771B5 /* TransformPacket.swift */; };
+		156816591E5E76A6005771B5 /* SynchronizedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156816581E5E76A6005771B5 /* SynchronizedArray.swift */; };
+		1568165B1E5E8A9B005771B5 /* SynchronizedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1568165A1E5E8A9B005771B5 /* SynchronizedDictionary.swift */; };
 		1590CA411E30311D00D3C8B9 /* DataPacker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1590CA401E30311D00D3C8B9 /* DataPacker.swift */; };
 		15A4D9AC1E1C88390027A5F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A4D9AB1E1C88390027A5F6 /* AppDelegate.swift */; };
 		15A4D9B01E1C88390027A5F6 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 15A4D9AF1E1C88390027A5F6 /* Actions.sks */; };
@@ -31,6 +34,9 @@
 		153B9F051E2998280040FD3F /* PlayerPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPacket.swift; sourceTree = "<group>"; };
 		154284961E3E9EBD006C06D6 /* AckPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AckPacket.swift; sourceTree = "<group>"; };
 		154284981E3EB23A006C06D6 /* Packet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
+		156816561E5E4EA7005771B5 /* TransformPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformPacket.swift; sourceTree = "<group>"; };
+		156816581E5E76A6005771B5 /* SynchronizedArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SynchronizedArray.swift; path = ../SynchronizedArray.swift; sourceTree = "<group>"; };
+		1568165A1E5E8A9B005771B5 /* SynchronizedDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizedDictionary.swift; sourceTree = "<group>"; };
 		1590CA401E30311D00D3C8B9 /* DataPacker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPacker.swift; sourceTree = "<group>"; };
 		15A4D9A81E1C88390027A5F6 /* FiftyThreeHurts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FiftyThreeHurts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15A4D9AB1E1C88390027A5F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,8 +87,11 @@
 			children = (
 				1590CA421E3031AD00D3C8B9 /* DataPackets */,
 				15A4D9C51E1C8AA60027A5F6 /* MultipeerController.swift */,
+				1568165A1E5E8A9B005771B5 /* SynchronizedDictionary.swift */,
+				156816581E5E76A6005771B5 /* SynchronizedArray.swift */,
 				15BE7A271E36C23E00F46692 /* PacketArchiver.swift */,
 				15C2A18E1E22FDAB0096BFB1 /* MultipeerSKSpriteNode.swift */,
+				156816561E5E4EA7005771B5 /* TransformPacket.swift */,
 			);
 			name = Multipeer;
 			sourceTree = "<group>";
@@ -233,9 +242,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				15A4D9B21E1C88390027A5F6 /* GameScene.swift in Sources */,
+				156816591E5E76A6005771B5 /* SynchronizedArray.swift in Sources */,
 				15BE7A281E36C23E00F46692 /* PacketArchiver.swift in Sources */,
 				151359EB1E2EF0F700C62ED9 /* DataUnpacker.swift in Sources */,
 				154284991E3EB23A006C06D6 /* Packet.swift in Sources */,
+				1568165B1E5E8A9B005771B5 /* SynchronizedDictionary.swift in Sources */,
 				15A4D9B41E1C88390027A5F6 /* GameViewController.swift in Sources */,
 				1590CA411E30311D00D3C8B9 /* DataPacker.swift in Sources */,
 				154284971E3E9EBD006C06D6 /* AckPacket.swift in Sources */,
@@ -244,6 +255,7 @@
 				15A4D9C61E1C8AA60027A5F6 /* MultipeerController.swift in Sources */,
 				15C2A18F1E22FDAB0096BFB1 /* MultipeerSKSpriteNode.swift in Sources */,
 				15BE7A2A1E36DA7300F46692 /* FrameCounter.swift in Sources */,
+				156816571E5E4EA7005771B5 /* TransformPacket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
